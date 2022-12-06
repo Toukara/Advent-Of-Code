@@ -93,5 +93,5 @@ input.forEach((line) => {
 
 console.log("-----------");
 console.log(`Part 1: ${totalPartOne}`);
-console.log(`Part 1: ${totalPartTwo}`);
+console.log(`Part 2: ${totalPartTwo}`);
 console.log("-----------");
