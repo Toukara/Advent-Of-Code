@@ -5,20 +5,36 @@ function getAssignments(elf) {
   return [...Array(end - start + 1).keys()].map((i) => start + i);
 }
 
-const getPairs = (pairs) => {
-  return pairs.reduce((count, pair) => {
-    const [elf1, elf2] = pair.split(",");
-    const e1Assignments = getAssignments(elf1);
-    const e2Assignments = getAssignments(elf2);
+function assignToElf(input) {
+  return input.reduce(
+    (count, pair) => {
+      const [elf1, elf2] = pair.split(",");
+      const elf1Assignments = getAssignments(elf1);
+      const elf2Assignments = getAssignments(elf2);
 
-    if (e1Assignments.every((assignment) => e2Assignments.includes(assignment)) || e2Assignments.every((assignment) => e1Assignments.includes(assignment))) {
-      count++;
-    }
+      if (
+        elf1Assignments.every((assignment) => elf2Assignments.includes(assignment)) ||
+        elf2Assignments.every((assignment) => elf1Assignments.includes(assignment))
+      ) {
+        count[0]++;
+      }
 
-    return count;
-  }, 0);
-};
+      if (
+        elf1Assignments.some((assignment) => elf2Assignments.includes(assignment)) ||
+        elf2Assignments.some((assignment) => elf1Assignments.includes(assignment))
+      ) {
+        count[1]++;
+      }
 
-let resultPartOne = getPairs(input);
+      return count;
+    },
+    [0, 0]
+  );
+}
 
-console.log("Part One: ", resultPartOne);
+const [part1, part2] = assignToElf(input);
+
+console.log("-----------");
+console.log(`Part 1: ${part1}`);
+console.log(`Part 2: ${part2}`);
+console.log("-----------");
